@@ -1,10 +1,17 @@
 class StudentsController < ApplicationController
 
   def index
-    byebug
     students = Student.all
-    # student = Student.find_by(last_name: params[:name].capitalize)
-    render json: students
+
+    if params.has_key?(:name)
+      student = Student.where(last_name: params[:name].capitalize)
+      render json: student
+    elsif params.has_key?(:name)
+      student = Student.where(first_name: params[:name].capitalize)
+      render json: student
+    else
+      render json: students
+    end
   end
 
   def show
